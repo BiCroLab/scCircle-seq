@@ -1,0 +1,4 @@
+This is the code for scCircle-seq and it include several parts:
+1. circle-calling
+2. normalization for 'circle matrix'
+3. topic modeling using cisTopics
