@@ -48,14 +48,14 @@ fi
 [ -d ${OUTPUT} ] || { mkdir -p ${OUTPUT}; }
 mkdir -p ${OUTPUT}/${PREFIX}_trimed_fastq
 
-# Trim the nextera adaptor in case it case false-positive edge reads
-# ${trimmomatic} PE -threads ${nThreads} -phred33 ${fastq1} ${fastq2} \
-# ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R1.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R1.unmapped.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R2.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R2.unmapped.fq.gz \
-# ILLUMINACLIP:/home/jinxin/tools/Trimmomatic/adapters/NexteraPE-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:51
+# Trim the nextera adaptor in case it cause false-positive edge reads
+${trimmomatic} PE -threads ${nThreads} -phred33 ${fastq1} ${fastq2} \
+${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R1.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R1.unmapped.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R2.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R2.unmapped.fq.gz \
+ILLUMINACLIP:/home/jinxin/tools/Trimmomatic/adapters/NexteraPE-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:51
 
 # Read Mapping 
 #conda activate AA
-# bwa mem -q -t ${nThreads} ${GENOME} ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R1.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R2.fq.gz | gzip > ${OUTPUT}/${PREFIX}.sam.gz
+bwa mem -q -t ${nThreads} ${GENOME} ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R1.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R2.fq.gz | gzip > ${OUTPUT}/${PREFIX}.sam.gz
 bwa mem -q -t ${nThreads} ${linear_spike_in} ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R1.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R2.fq.gz | gzip > ${OUTPUT}/${PREFIX}_linear_spike_in.sam.gz
 bwa mem -q -t ${nThreads} ${circular_spike_in} ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R1.fq.gz ${OUTPUT}/${PREFIX}_trimed_fastq/${PREFIX}_R2.fq.gz | gzip > ${OUTPUT}/${PREFIX}_circular_spike_in.sam.gz
 samtools sort -@ ${nThreads} -o ${OUTPUT}/${PREFIX}.Sort.bam ${OUTPUT}/${PREFIX}.sam.gz
