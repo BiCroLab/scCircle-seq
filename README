@@ -1,4 +1,4 @@
-This is the code for scCircle-seq and it include several parts:
+# scCircle-seq analysis
 
 1. General pipeline for scCircle-seq:
     (1) Mapping 
