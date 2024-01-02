@@ -1,0 +1,12 @@
+# scCircle-seq analysis
+
+1. General pipeline for scCircle-seq:
+    (1) Mapping 
+    (2) QC with linear and circular spike-in reads ratio
+    (3) Calling circle region for single cell
+    (4) Reconstruct the circle with AA(https://github.com/virajbdeshpande/AmpliconArchitect) or AR(https://github.com/jluebeck/AmpliconReconstructor) (circle_map.sh)
+    (4') Dissect the circle detected with Circle Map(https://github.com/iprada/Circle-Map) (circle_map_without_reconstruction.sh)
+
+2. Scripts for calculating stability score and frequency of circle regions
+
+3. Topic modeling using cisTopics
